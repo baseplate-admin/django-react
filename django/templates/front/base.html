@@ -1,0 +1,122 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hello Bulma!</title>
+
+
+    <!--- Jquery JavaScript Starts --->
+    <script href="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.js"></script>
+    <!--- Jquery Ends --->
+    <!-- ChartJS start -->
+    <script href="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.bundle.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.css">
+    <!-- ChartJS end -->
+    <!-- CSS STARTS HERE --->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.css">
+    <!-- CSS ENDS HERE -->
+
+    <!-- FONT AWESOME STARTS HERE -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.css">
+    <!-- FONT AWESOME ENDS HERE -->
+
+    <!-- Ionicons Starts Here -->
+    <script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>
+    <!-- Ionicons Ends Here -->
+</head>
+<!-- ROTATING CSS -->
+<style>@-webkit-keyframes rotating{from{-webkit-transform:rotate(0);-o-transform:rotate(0);transform:rotate(0)}to{-webkit-transform:rotate(360deg);-o-transform:rotate(360deg);transform:rotate(360deg)}}@keyframes rotating{from{-ms-transform:rotate(0);-moz-transform:rotate(0);-webkit-transform:rotate(0);-o-transform:rotate(0);transform:rotate(0)}to{-ms-transform:rotate(360deg);-moz-transform:rotate(360deg);-webkit-transform:rotate(360deg);-o-transform:rotate(360deg);transform:rotate(360deg)}}.rotating{-webkit-animation:rotating 2s linear infinite;-moz-animation:rotating 2s linear infinite;-ms-animation:rotating 2s linear infinite;-o-animation:rotating 2s linear infinite;animation:rotating 2s linear infinite}</style>
+<!-- ROTATING CSS  END -->
+
+<body>
+<!--  NAV BAR STARTS HERE --->
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <h1 class="navbar-item rotating">
+                <svg width="40px" height="40px" viewBox="0 0 32 32"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g id="icon" fill-rule="nonzero"><circle id="circle" fill="#EAEEF5" cx="16" cy="16" r="16"></circle><circle id="circle_copy" fill="#A9A9A9" cx="16" cy="16" r="11"></circle><circle id="circle_copy_2" fill="#000000" cx="16" cy="16" r="6"></circle><circle id="circle_copy_3" fill="#4B0082	" cx="25" cy="10" r="2"></circle></g></g></svg>
+            </h1>
+
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false"
+               data-target="navbarBasicExample">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+
+        <div id="navbarBasicExample" class="navbar-menu">
+            <div class="navbar-start">
+                <a class="navbar-item" href="/">
+                    Home
+                </a>
+
+                <a class="navbar-item" href="/projects">
+                    Projects
+                </a>
+
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link">
+                        More
+                    </a>
+
+                    <div class="navbar-dropdown">
+                        <a class="navbar-item">
+                            About
+                        </a>
+                        <a class="navbar-item">
+                            Jobs
+                        </a>
+                        <a class="navbar-item">
+                            Contact
+                        </a>
+                        <hr class="navbar-divider">
+                        <a class="navbar-item">
+                            Report an issue
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="navbar-end">
+                <a height="30px" width="30px" class="bd-navbar-icon navbar-item" href="https://github.com/baseplate-admin/Django-Archive">
+                    <ion-icon name="logo-github" size="large"/>
+
+                </a>
+            </div>
+        </div>
+    </div>
+
+    {#        <div class="navbar-end">#}
+    {#          <div class="navbar-item">#}
+    {#            <div class="buttons">#}
+    {#              <a class="button is-primary">#}
+    {#                <strong>Sign up</strong>#}
+    {#              </a>#}
+    {#              <a class="button is-light">#}
+    {#                Log in#}
+    {#              </a>#}
+    {#            </div>#}
+    {#          </div>#}
+    {#        </div>#}
+
+</nav>
+{% block heroblock %}
+{% endblock %}
+
+<!-- NAVBAR ENDS HERE -->
+<footer class="footer">
+    <div class="content has-text-centered">
+        <p>
+            <strong>Bulma</strong> by <a href="https://jgthms.com">Jeremy Thomas</a>. The source code is licensed
+            <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. The website content
+            is licensed <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY NC SA 4.0</a>.
+        </p>
+    </div>
+</footer>
+</body>
+<!-- /.container -->
+</html>
