@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import validator from 'validator';
 import axios from 'axios';
-function HeroMedium() {
+export default function HeroMedium() {
     let [long, setLong] = useState("");
     let [postId, setPostId] = useState(0)
     let [urlNotValid, setUrlNotValid] = useState('');
@@ -105,4 +105,3 @@ function HeroMedium() {
         </>
     );
 }
-export default HeroMedium;
