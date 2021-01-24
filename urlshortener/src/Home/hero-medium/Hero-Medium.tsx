@@ -12,10 +12,14 @@ export default function HeroMedium() {
     function dateTime(){
         let date = new Date();
 
-        let hour = date.getHours();
-        let minute = date.getMinutes();
-        let seconds = date.getSeconds();
+        let hour:number = date.getHours();
+        let minute:any = date.getMinutes();
+        let seconds:number = date.getSeconds();
         let amOrPm;
+        if (minute.length < 1){
+            let changedMinute = minute;;
+            minute = `0${changedMinute}`;
+        }
         if (hour < 12){
             amOrPm = 'AM'
         }
