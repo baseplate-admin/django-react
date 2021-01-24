@@ -1,5 +1,7 @@
 import {useEffect, useState} from 'react';
 import validator from 'validator';
+import Hero from "../hero/Hero";
+
 import axios from 'axios';
 export default function HeroMedium() {
     let [long, setLong] = useState("");
@@ -67,6 +69,7 @@ export default function HeroMedium() {
     }
     return (
         <>
+        <Hero />
         <section className="hero is-medium">
             <div className="hero-body" style={{ textAlign: 'center' }}>
                 <div className="container">
