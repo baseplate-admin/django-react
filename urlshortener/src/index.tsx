@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Home from './Home/home';
-
+import './bulma.css'
 ReactDOM.render(
   <React.StrictMode>
     <Home />
