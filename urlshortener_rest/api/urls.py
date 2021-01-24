@@ -10,4 +10,5 @@ router.register(r"url-short", views.UrlViewset)
 urlpatterns = [
     path("", include(router.urls)),
     path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
+    path("url/<short_url>/", views.get_long_url, name="Get Full Site"),
 ]
