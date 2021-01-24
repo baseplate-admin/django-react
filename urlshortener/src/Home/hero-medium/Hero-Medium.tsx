@@ -1,18 +1,45 @@
-import {useState} from 'react';
-import validator from 'validator'
-import axios from 'axios'
-
+import {useEffect, useState} from 'react';
+import validator from 'validator';
+import axios from 'axios';
 function HeroMedium() {
-    const [long, setLong] = useState("");
-    const [postId, setPostId] = useState(0)
-    const [urlNotValid, setUrlNotValid] = useState('');
+    let [long, setLong] = useState("");
+    let [postId, setPostId] = useState(0)
+    let [urlNotValid, setUrlNotValid] = useState('');
+    let [time, setTime] = useState('')
+
+    function dateTime(){
+        let date = new Date();
+
+        let hour = date.getHours();
+        let minute = date.getMinutes();
+        let seconds = date.getSeconds();
+        let amOrPm;
+        if (hour < 12){
+            amOrPm = 'AM'
+        }
+        else if(hour === 12){
+            amOrPm = 'PM'
+        }
+        else if(hour > 12){
+            hour = hour - 12
+            amOrPm = "PM"
+        }
+
+
+        setTime(`${hour}:${minute}:${seconds} ${amOrPm}`)
+    }
+    useEffect(() =>{
+        setInterval(() => {
+            dateTime()
+        },1)
+    },[])
     function handlePostData(event:any){
         event.preventDefault()
         validateUrl()
         }
     function postData(){
-        const longUrl = {long: long};
-        const url = 'https:jsonplaceholder.typicode.com/posts'
+        const longUrl = {long: long, time:time};
+        const url = 'http://127.0.0.1:8000/url-short/'
         axios.post(url, longUrl)
         .then(res => {
             setPostId(res.status)
@@ -37,9 +64,9 @@ function HeroMedium() {
         else if (!urlTrueOrFalse){
             setUrlNotValid("Please enter a valid url")
         }
-
     }
     return (
+        <>
         <section className="hero is-medium">
             <div className="hero-body" style={{ textAlign: 'center' }}>
                 <div className="container">
@@ -52,22 +79,30 @@ function HeroMedium() {
                                 alt="Url (WWW)" width="20px" height="30px" />
                         </span>
                         <input onChange={handleChange} required value={long} className="input is-info" type="text" placeholder="Long Version Url"
-                            style={{ width: 400 }} />   
-                        <br />
-                        <br />
-                        <div className="control" style={{ textAlign: 'center' }}>
+                            style={{
+                                width: 400 
+                            }} />   
+                        <div className="control" style={{
+                                textAlign: 'center',
+                                paddingTop: 20, 
+                            }}>
                             <button id='submit' onClick={handlePostData} className="button is-primary">Create Short Url</button>
                         </div>
                     </div>
                 </div>
+                <div style={{
+                    paddingTop: 20,
+                    textAlign: "center",
+                    color: "red",
+                }}>
+                    <h3 style={{
+                        fontSize: 25,
+                    }}>{urlNotValid}</h3>
+                </div>
             </div>
-            <div style={{
-                textAlign: "center",
-                color: "red",
-            }}>
-                <h3>{urlNotValid}</h3>
-            </div>
+
         </section>
+        </>
     );
 }
 export default HeroMedium;
