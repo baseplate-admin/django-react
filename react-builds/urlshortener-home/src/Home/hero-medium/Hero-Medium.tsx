@@ -6,7 +6,6 @@ import axios from 'axios';
 export default function HeroMedium() {
     let [long, setLong] = useState("");
     let [hiddenLong, setHiddenLong] = useState("");
-    let [postId, setPostId] = useState(0)
     let [urlNotValid, setUrlNotValid] = useState('');
     let [time, setTime] = useState('')
 
@@ -43,10 +42,10 @@ export default function HeroMedium() {
     }
     function postData() {
         const longUrl = { long: long, time: time };
-        const url = 'http://127.0.0.1:8000/api/v1/url-short/'
+        const url = 'http://127.0.0.1:8000/api/v1/url/'
         axios.post(url, longUrl)
             .then(res => {
-                setPostId(res.status)
+                console.log(res.data)
             })
             .catch(error => {
                 console.log(error)
