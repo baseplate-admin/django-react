@@ -50,5 +50,5 @@ def post_data(request):
             short = ShortUrl().logic()
             time = serializer.data["time"]
             Url.objects.create(long=long, short=short, time=time)
-            return JsonResponse({short: short}, status=201)
+            return JsonResponse({"short": short}, status=201)
         return JsonResponse(serializer.errors, status=400)
