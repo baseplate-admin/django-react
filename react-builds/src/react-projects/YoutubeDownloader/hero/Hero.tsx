@@ -1,6 +1,6 @@
 export default function Hero(){
     return(
-        <section className="hero">
+        <section style={{paddingBottom:45}} className="hero">
         <div className="hero-body" style={{textAlign: "center"}}>
             <div className="container">
                 <img

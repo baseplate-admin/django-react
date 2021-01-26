@@ -37,7 +37,7 @@ export default function HeroMedium(props:any){
         <section className="hero is-medium">
         <div className="hero-body" style={{textAlign: "center"}}>
             <div className="container">
-                <h1 className="title">Enter Your URL:</h1>
+                <h1 style={{paddingBottom:20}} className="title">Enter your URL:</h1>
                 <h2 className="subtitle">
                         <div
                             className="control has-icons-left"
@@ -64,12 +64,10 @@ export default function HeroMedium(props:any){
                             />
                             <br />
                             <br />
-                            <div className="control" style={{textAlign: "center"}}>
-                                <input
-                                    onClick={handleClick}
-                                    value="Download!!"
-                                    className="button is-primary"
-                                />
+                            <div className="control" style={{
+                                textAlign: 'center',
+                            }}>
+                                <button id='submit' onClick={handleClick} className="button is-primary">Download</button>
                             </div>
                             <div style={{
                                 paddingTop: 20,
