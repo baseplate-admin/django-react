@@ -1,9 +1,9 @@
-import Navbar from './navbar/Navbar';
+import Navbar from '../shared-components/navbar/Navbar';
 import HeroMedium from "./hero-medium/Hero-Medium"
 import { useState } from 'react';
 import ShowUrl from './showUrl/showUrl';
 
-function Home(){
+export default function UrlShortener() {
     let [long, setLong] = useState("");
     let [urlNotValid, setUrlNotValid] = useState('');
     let [time, setTime] = useState('')
@@ -21,4 +21,3 @@ function Home(){
     </>
     )
 }
-export default Home;
