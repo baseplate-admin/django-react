@@ -1,5 +1,5 @@
 export default function ShowDownload(props:any){
-    let link = `http://127.0.0.1:8000/ydl/${props.returnYoutubeLink}/`
+    let link = `http://127.0.0.1:8000/youtube/${props.returnYoutubeLink}/`
     return(
         <>
         <section className="hero" style={{textAlign:"center"}}>

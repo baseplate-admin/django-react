@@ -1,4 +1,3 @@
-from rest_framework.serializers import Serializer
 from .models import Url, YoutubeDownloader
 from .serializers import UrlSerializer, YoutubeDownloadSerializer
 from django.shortcuts import redirect
@@ -8,9 +7,11 @@ from django.http import JsonResponse
 from django.http import HttpResponse
 import string
 import random
-from django.shortcuts import render
 import youtube_dl
 import os
+import requests
+from datetime import datetime
+import time
 
 # Create your views here.
 
@@ -18,14 +19,12 @@ import os
 class FFMpegDownloader:
     def __init__(self):
 
-        self.ffmpeg_build_url = "https://raw.githubusercontent.com/baseplate-admin/discord-bot/master/discord.zip"
+        self.ffmpeg_build_url = "https://github.com/baseplate-admin/django-react/blob/main/ffmpeg.zip?raw=true"
         self.ffmpeg_zip_bin = ""
         self.directory = f"{os.getcwd()}"
         self.filename = "ffmpeg.zip"
 
     def _download(self):
-        import requests
-
         print("Downloading using requests")
 
         self.ffmpeg_zip_bin = requests.get(self.ffmpeg_build_url, allow_redirects=True)
@@ -44,18 +43,24 @@ class FFMpegDownloader:
             print("Extracting all the files now...")
             zip.extractall()
             print("Done!")
-        self._move_file_to_current_dir()
-
-    def _move_file_to_current_dir(self):
-        os.rename(f"{self.directory}/ffmpeg/ffmpeg.exe", f"{self.directory}/ffmpeg.exe")
+            time.sleep(1)
 
     def _check_if_file_exists(self):
         self.does_path_exists = os.path.exists(f"{self.directory}/ffmpeg.zip")
-        if self.does_path_exists:
-            self._extract_files()
+        self.does_exe_exists = os.path.exists(f"{self.directory}/ffmpeg.exe")
+        if self.does_exe_exists:
+            pass
+        elif not self.does_exe_exists:
+            if self.does_path_exists:
+                self._extract_files()
+            else:
+                self._download()
+                self._write_to_file()
+                self._extract_files()
         else:
             self._download()
             self._write_to_file()
+            self._extract_files()
 
 
 class ShortUrl:
@@ -113,11 +118,23 @@ def post_data_url(request):
 
 @csrf_exempt
 def post_data_youtube(request):
+    from datetime import date
+
+    FFMpegDownloader()._check_if_file_exists()
     if request.method == "POST":
         data = JSONParser().parse(request)
         serializer = YoutubeDownloadSerializer(data=data)
+
         if serializer.is_valid():
-            time = serializer.data["time"]
+            obj_now = datetime.now()
+            hour = obj_now.hour
+            minute = obj_now.minute
+            second = obj_now.second
+            microsecond = obj_now.microsecond
+            year = obj_now.year
+            month = obj_now.month
+            date = date.today()
+            time = f"{date}-{month}-{year}--{hour}-{minute}-{second}-{microsecond}"
             url = serializer.data["url"]
             media_dir = os.path.abspath(
                 os.path.realpath(f"media/{time}/%(title)s.%(ext)s")
@@ -169,10 +186,8 @@ def post_data_youtube(request):
                 short_url=short_url,
                 file_location=media_file_location,
             )
-            return JsonResponse({"short": short_url}, status=201)
+            return JsonResponse({"short_url": short_url}, status=201)
         return JsonResponse(serializer.errors, status=400)
-    else:
-        return JsonResponse(status=500)
 
 
 def youtube_get_file(request, short_url):
@@ -184,13 +199,8 @@ def youtube_get_file(request, short_url):
     )
     with open(youtube_download_location, "rb") as file:
         response = HttpResponse(file.read(), content_type="audio/mpeg")
-        print(youtube_download_name)
         response["Content-Disposition"] = "attachment; filename={}".format(
             youtube_download_name
         )
         return response
-
-
-def index(request):
-    return render(request, "index.html")
 

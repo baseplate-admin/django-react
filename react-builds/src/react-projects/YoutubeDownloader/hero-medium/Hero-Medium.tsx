@@ -4,13 +4,20 @@ import Validator from 'validator';
 export default function HeroMedium(props:any){
     function postToDjango(){
         let payload = {url:props.youtubeLink}
-        let url = "https://127.0.0.1:8000/api/v1/youtube"
+        let url = "http://127.0.0.1:8000/api/v1/youtube/"
         axios.post(url,payload)
+        .then(res=>{props.setReturnYoutubeLink(res.data.short_url)})
         .then(props.setDidYoutubeLinkPost(true))
-        .then(res => {props.setReturnYoutubeLink(res.data.returnUrl)})
-        .then(props.setShowDownloadScreen(true))
-        .catch(e=>{
-            console.log(e)
+        .then(() => {
+            setTimeout(function(){
+                props.setDidYoutubeLinkPost(false);
+                props.setShowDownloadScreen(true);
+                console.log("Showing");
+            },2000)
+        })
+
+        .catch(error => {
+            console.log(error)
         })
     }
     function handleChange(event:any){
@@ -22,7 +29,6 @@ export default function HeroMedium(props:any){
             props.setisUrlValidText("Please Enter a Valid URL")
         }
         else if (validUrl){
-            props.setShowDownloadScreen(false)
             postToDjango()
             props.setYoutubeLink('')
         }

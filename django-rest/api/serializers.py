@@ -10,7 +10,4 @@ class UrlSerializer(serializers.Serializer):
 
 
 class YoutubeDownloadSerializer(serializers.Serializer):
-    title = serializers.CharField(max_length=200)
     url = serializers.URLField()
-    file_location = serializers.CharField(max_length=200)
-    time = serializers.CharField(max_length=100, default=None)
