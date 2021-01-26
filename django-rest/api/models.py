@@ -11,4 +11,15 @@ class Url(models.Model):
     time = models.CharField(max_length=25)
 
     def __str__(self):
-        return self.long
+        return self.id
+
+
+class YoutubeDownloader(models.Model):
+    title = models.CharField(max_length=200)
+    url = models.URLField()
+    file_location = models.CharField(max_length=200)
+    time = models.CharField(max_length=100)
+    short_url = models.CharField(max_length=10)
+
+    def __str__(self):
+        return self.id
