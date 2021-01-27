@@ -1,7 +1,10 @@
 import axios from 'axios';
 import Validator from 'validator';
-
+import DropDown from '../dropdown/DropDown'
+import {useState} from 'react' 
 export default function HeroMedium(props:any){
+        let [toggle, setToggle] = useState(false);
+        let [toggleValue, setToggleValue] = useState('');
     function postToDjango(){
         let payload = {url:props.youtubeLink}
         let url = "http://127.0.0.1:8000/api/v1/youtube/"
@@ -36,7 +39,7 @@ export default function HeroMedium(props:any){
     return(
         <section className="hero is-medium">
         <div className="hero-body" style={{textAlign: "center"}}>
-            <div className="container">
+            <div className="container" >
                 <h1 style={{paddingBottom:20}} className="title">Enter your URL:</h1>
                 <h2 className="subtitle">
                         <div
@@ -52,7 +55,7 @@ export default function HeroMedium(props:any){
                                 />
                             </span>
                             <input
-                            onChange={e=>handleChange(e.target.value)}
+                                onChange={e=>handleChange(e.target.value)}
                                 required
                                 name="url"
                                 className="input is-info"
@@ -60,12 +63,12 @@ export default function HeroMedium(props:any){
                                 placeholder="Youtube Url"
                                 id="url"
                                 style={{width: 400}}
-                            value={props.youtubeLink}
+                                value={props.youtubeLink}
                             />
-                            <br />
-                            <br />
+                                <DropDown toggle={toggle} setToggle={setToggle} toggleValue={toggleValue} setToggleValue={setToggleValue} />
                             <div className="control" style={{
                                 textAlign: 'center',
+                                paddingTop: 20
                             }}>
                                 <button id='submit' onClick={handleClick} className="button is-primary">Download</button>
                             </div>
