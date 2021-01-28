@@ -22,4 +22,4 @@ class YoutubeDownloader(models.Model):
     short_url = models.CharField(max_length=10)
 
     def __str__(self):
-        return self.id
+        return self.short_url

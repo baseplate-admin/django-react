@@ -6,17 +6,23 @@ import urlsvg from './url.svg'
 export default function HeroMedium(props:any){
         let [toggle, setToggle] = useState(false);
         let [toggleValue, setToggleValue] = useState('');
-    function postToDjango(){
-        let payload = {url:props.youtubeLink}
+
+        function postToDjango(){
+        let payload = {
+            url:props.youtubeLink,
+            bitrate:toggleValue
+        }
         let url = "http://127.0.0.1:8000/api/v1/youtube/"
         axios.post(url,payload)
-        .then(res=>{props.setReturnYoutubeLink(res.data.short_url)})
+        .then(res=>{
+            props.setUneditedTitleValue(res.data.title);
+            props.setReturnYoutubeLink(res.data.short);
+        })
         .then(props.setDidYoutubeLinkPost(true))
         .then(() => {
             setTimeout(function(){
                 props.setDidYoutubeLinkPost(false);
                 props.setShowDownloadScreen(true);
-                console.log("Showing");
             },2000)
         })
 

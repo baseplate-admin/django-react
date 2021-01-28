@@ -1,3 +1,5 @@
+from requests import api
+from rest_framework import serializers
 from .models import Url, YoutubeDownloader
 from .serializers import UrlSerializer, YoutubeDownloadSerializer
 from django.shortcuts import redirect
@@ -5,15 +7,49 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
 from django.http import JsonResponse
 from django.http import HttpResponse
-import string
-import random
 import youtube_dl
 import os
 import requests
 from datetime import datetime
 import time
+import string
+import random
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
 
 # Create your views here.
+class ShortUrl:
+    def __init__(self):
+        self.short_letter = self._short_letter()
+
+    def _short_letter(self):
+        letters = string.ascii_lowercase + string.ascii_uppercase
+        rand_letters = random.choices(letters, k=5)
+        rand_letters = "".join(rand_letters)
+        self.short_letter = rand_letters
+        return self.short_letter
+
+    def _does_short_exists(self):
+        is_true_or_false = Url.objects.filter(short=self.short_letter).exists()
+        if is_true_or_false:
+            return True
+        elif not is_true_or_false:
+            return False
+
+    def logic(self):
+        if not self._does_short_exists():
+            return self.short_letter
+        elif self._does_short_exists():
+            self._short_letter()
+
+    def _youtube_short_link(self):
+        is_true_or_false = YoutubeDownloader.objects.filter(
+            short_url=self.short_letter
+        ).exists()
+        if not is_true_or_false:
+            return self.short_letter
+        else:
+            self._youtube_short_link()
 
 
 class FFMpegDownloader:
@@ -63,38 +99,20 @@ class FFMpegDownloader:
             self._extract_files()
 
 
-class ShortUrl:
-    def __init__(self):
-        self.short_letter = self._short_letter()
-
-    def _short_letter(self):
-        letters = string.ascii_lowercase + string.ascii_uppercase
-        rand_letters = random.choices(letters, k=5)
-        rand_letters = "".join(rand_letters)
-        self.short_letter = rand_letters
-        return self.short_letter
-
-    def _does_short_exists(self):
-        is_true_or_false = Url.objects.filter(short=self.short_letter).exists()
-        if is_true_or_false:
-            return True
-        elif not is_true_or_false:
-            return False
-
-    def logic(self):
-        if not self._does_short_exists():
-            return self.short_letter
-        elif self._does_short_exists():
-            self._short_letter()
-
-    def _youtube_short_link(self):
-        is_true_or_false = YoutubeDownloader.objects.filter(
-            short_url=self.short_letter
-        ).exists()
-        if not is_true_or_false:
-            return self.short_letter
-        else:
-            self._youtube_short_link()
+@api_view(["GET", "POST"])
+def url(request):
+    if request.method == "POST":
+        short = ShortUrl().logic()
+        request.data["short"] = short
+        serializer = UrlSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(data={"short": short})
+        return Response(serializer.errors)
+    else:
+        data = Url.objects.all()
+        serializer = UrlSerializer(data, many=True)
+        return Response(serializer.data)
 
 
 def get_long_url(request, short_url):
@@ -102,92 +120,80 @@ def get_long_url(request, short_url):
     return redirect(long)
 
 
-@csrf_exempt
-def post_data_url(request):
+@api_view(["GET", "POST"])
+def youtube(request):
     if request.method == "POST":
-        data = JSONParser().parse(request)
-        serializer = UrlSerializer(data=data)
+        from datetime import date
+
+        FFMpegDownloader()._check_if_file_exists()
+        obj_now = datetime.now()
+        hour = obj_now.hour
+        minute = obj_now.minute
+        second = obj_now.second
+        microsecond = obj_now.microsecond
+        year = obj_now.year
+        month = obj_now.month
+        date = date.today()
+        time = f"{date}-{month}-{year}--{hour}-{minute}-{second}-{microsecond}"
+        url = request.data["url"]
+        bitrate = request.data["bitrate"]
+        media_dir = os.path.abspath(os.path.realpath(f"media/{time}/%(title)s.%(ext)s"))
+        try:
+            ydl_options = {
+                "format": "bestaudio/best",
+                "outtmpl": media_dir,
+                "postprocessors": [
+                    {
+                        "key": "FFmpegExtractAudio",
+                        "preferredcodec": "mp3",
+                        "preferredquality": f"{bitrate}",
+                    }
+                ],
+            }
+        except:
+            print("FFMpeg not installed. Downloading it now.")
+            FFMpegDownloader()._check_if_file_exists()
+            ydl_options = {
+                "format": "bestaudio/best",
+                "outtmpl": media_dir,
+                "postprocessors": [
+                    {
+                        "key": "FFmpegExtractAudio",
+                        "preferredcodec": "mp3",
+                        "preferredquality": "320",
+                    }
+                ],
+            }
+        with youtube_dl.YoutubeDL(ydl_options) as ydl:
+            info_dict = ydl.extract_info(url, download=False)  # URL = FORM
+            ydl.prepare_filename(info_dict)
+            title_unchanged = info_dict["title"]
+            title = info_dict["title"]
+            unsupported_characters = ["<", ">", ":", '"', "/", "\\", "|", "*"]
+            for characters in unsupported_characters:
+                if characters in title:
+                    title = title.replace(characters, "_")
+                # if "." in title:
+                #     title = title.replace(".", "")
+            ydl.download([url])
+
+        current_dir = os.getcwd()
+        media_file_location = f"{current_dir}/media/{time}/{title}.mp3"
+        short_url = ShortUrl()._youtube_short_link()
+        request.data["time"] = time
+        request.data["title"] = title_unchanged
+        request.data["url"] = url
+        request.data["short_url"] = short_url
+        request.data["file_location"] = media_file_location
+        serializer = YoutubeDownloadSerializer(data=request.data)
         if serializer.is_valid():
-            long = serializer.data["long"]
-            short = ShortUrl().logic()
-            time = serializer.data["time"]
-            Url.objects.create(long=long, short=short, time=time)
-            return JsonResponse({"short": short}, status=201)
-        return JsonResponse(serializer.errors, status=400)
-
-
-@csrf_exempt
-def post_data_youtube(request):
-    from datetime import date
-
-    FFMpegDownloader()._check_if_file_exists()
-    if request.method == "POST":
-        data = JSONParser().parse(request)
-        serializer = YoutubeDownloadSerializer(data=data)
-
-        if serializer.is_valid():
-            obj_now = datetime.now()
-            hour = obj_now.hour
-            minute = obj_now.minute
-            second = obj_now.second
-            microsecond = obj_now.microsecond
-            year = obj_now.year
-            month = obj_now.month
-            date = date.today()
-            time = f"{date}-{month}-{year}--{hour}-{minute}-{second}-{microsecond}"
-            url = serializer.data["url"]
-            media_dir = os.path.abspath(
-                os.path.realpath(f"media/{time}/%(title)s.%(ext)s")
-            )
-            try:
-                ydl_options = {
-                    "format": "bestaudio/best",
-                    "outtmpl": media_dir,
-                    "postprocessors": [
-                        {
-                            "key": "FFmpegExtractAudio",
-                            "preferredcodec": "mp3",
-                            "preferredquality": "320",
-                        }
-                    ],
-                }
-            except:
-                print("FFMpeg not installed. Downloading it now.")
-                FFMpegDownloader()._check_if_file_exists()
-                ydl_options = {
-                    "format": "bestaudio/best",
-                    "outtmpl": media_dir,
-                    "postprocessors": [
-                        {
-                            "key": "FFmpegExtractAudio",
-                            "preferredcodec": "mp3",
-                            "preferredquality": "320",
-                        }
-                    ],
-                }
-            with youtube_dl.YoutubeDL(ydl_options) as ydl:
-                info_dict = ydl.extract_info(url, download=False)  # URL = FORM
-                ydl.prepare_filename(info_dict)
-                title_unchanged = info_dict["title"]
-                title = info_dict["title"]
-                unsupported_characters = ["<", ">", ":", '"', "/", "\\", "|", "*"]
-                for characters in unsupported_characters:
-                    if characters in title:
-                        title = title.replace(characters, "_")
-                ydl.download([url])
-
-            current_dir = os.getcwd()
-            media_file_location = f"{current_dir}/media/{time}/{title}.mp3"
-            short_url = ShortUrl()._youtube_short_link()
-            YoutubeDownloader.objects.create(
-                time=time,
-                title=title_unchanged,
-                url=url,
-                short_url=short_url,
-                file_location=media_file_location,
-            )
-            return JsonResponse({"short_url": short_url}, status=201)
-        return JsonResponse(serializer.errors, status=400)
+            serializer.save()
+            return Response(data={"short": short_url, "title": str(title)})
+        return Response(serializer.errors)
+    else:
+        data = YoutubeDownloader.objects.all()
+        serializer = YoutubeDownloadSerializer(data, many=True)
+        return Response(serializer.data)
 
 
 def youtube_get_file(request, short_url):

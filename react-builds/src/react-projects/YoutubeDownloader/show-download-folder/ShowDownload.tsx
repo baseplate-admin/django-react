@@ -1,6 +1,35 @@
+import { useEffect, useState } from 'react'
+import fileDownload from 'js-file-download'
 import downloadlogo from './download.svg'
+import Axios from "axios";
+
 export default function ShowDownload(props:any){
+    let [timer,setTimer] = useState(0)
+    let timerEle = 5
+    useEffect(()=>{
+        setTimer(timerEle)
+        let interval = setInterval(()=>{
+            setTimer(timerEle-1);
+            timerEle--;
+            if (timerEle === 0){
+                handleClick()
+                clearInterval(interval)
+            }
+        },1000)
+    },[])
     let link = `http://127.0.0.1:8000/youtube/${props.returnYoutubeLink}/`
+    const handleClick = () =>{
+        download(link,props.uneditedTitle)
+    }
+    
+    function download(url: string, filename: any) {
+    Axios.get(url, {
+      responseType: 'blob',
+    }).then(res => {
+        console.log(filename)
+      fileDownload(res.data, filename);
+    });
+  }
     return(
         <>
         <section className="hero" style={{textAlign:"center"}}>
@@ -24,15 +53,16 @@ export default function ShowDownload(props:any){
             <div className="container">
                 <h1 className="title"></h1>
                 <h2 className="subtitle">
-                    If your download doesn't start,
+                    If your download doesn't start in {timer},
                     <br />
-                    <a id="submit" href={link}
+                    <a id="submit" onClick={handleClick}
                         >Click me</a
                     >
                 </h2>
             </div>
         </div>
     </section>
+    
     </>
     )
 }

@@ -12,6 +12,8 @@ export default function YoutubeDownloader(){
     let [returnYoutubeLink, setReturnYoutubeLink] = useState(''); 
     let [showDownloadScreen, setShowDownloadScreen] = useState(false);
     let [isUrlValidText, setisUrlValidText] = useState("");
+    let [uneditedTitle,setUneditedTitleValue] = useState('');
+
     return(
         <>
         <Helmet><title>Youtube Downloader</title></Helmet>
@@ -19,12 +21,12 @@ export default function YoutubeDownloader(){
         {(!didYoutubeLinkPost && !showDownloadScreen)?(
             <>
             <Hero />
-            <HeroMedium isUrlValidText={isUrlValidText} setisUrlValidText={setisUrlValidText} setShowDownloadScreen={setShowDownloadScreen} youtubeLink={youtubeLink} setYoutubeLink={setYoutubeLink} setDidYoutubeLinkPost={setDidYoutubeLinkPost} returnYoutubeLink={returnYoutubeLink} setReturnYoutubeLink={setReturnYoutubeLink} />
+            <HeroMedium setUneditedTitleValue={setUneditedTitleValue} isUrlValidText={isUrlValidText} setisUrlValidText={setisUrlValidText} setShowDownloadScreen={setShowDownloadScreen} youtubeLink={youtubeLink} setYoutubeLink={setYoutubeLink} setDidYoutubeLinkPost={setDidYoutubeLinkPost} returnYoutubeLink={returnYoutubeLink} setReturnYoutubeLink={setReturnYoutubeLink} />
             </>
         ):(didYoutubeLinkPost && !showDownloadScreen)?(
             <LoadinLogo />
         ):(
-            <ShowDownload returnYoutubeLink={returnYoutubeLink}/>
+            <ShowDownload uneditedTitle={uneditedTitle} returnYoutubeLink={returnYoutubeLink}/>
 )}
         </>
     )

@@ -1,13 +1,17 @@
 from rest_framework import serializers
-from .models import Url
+from .models import Url, YoutubeDownloader
 
 # Define your Serializer here.
 
 
-class UrlSerializer(serializers.Serializer):
-    long = serializers.CharField(max_length=1000)
-    time = serializers.CharField(default="-", max_length=25)
+class UrlSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Url
+        fields = "__all__"
 
 
-class YoutubeDownloadSerializer(serializers.Serializer):
-    url = serializers.URLField()
+class YoutubeDownloadSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = YoutubeDownloader
+        fields = "__all__"
+

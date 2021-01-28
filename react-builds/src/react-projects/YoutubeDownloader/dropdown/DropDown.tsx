@@ -1,7 +1,6 @@
 import { useEffect,} from "react"
 
 export default function DropDown(props:any){
-
     function toggleClick(){
         console.log(props.toggle)
         if (!props.toggle){
@@ -12,7 +11,7 @@ export default function DropDown(props:any){
         }
     }
     useEffect(()=>{
-        props.setToggleValue("128")
+        props.setToggleValue("192")
     },[])
 
     return(
