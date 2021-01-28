@@ -1,21 +1,14 @@
-from requests import api
-from rest_framework import serializers
 from .models import Url, YoutubeDownloader
 from .serializers import UrlSerializer, YoutubeDownloadSerializer
 from django.shortcuts import redirect
-from django.views.decorators.csrf import csrf_exempt
-from rest_framework.parsers import JSONParser
-from django.http import JsonResponse
 from django.http import HttpResponse
 import youtube_dl
-import os
-import requests
-from datetime import datetime
-import time
-import string
-import random
+
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+
+import time
+import os
 
 # Create your views here.
 class ShortUrl:
@@ -23,6 +16,9 @@ class ShortUrl:
         self.short_letter = self._short_letter()
 
     def _short_letter(self):
+        import string
+        import random
+
         letters = string.ascii_lowercase + string.ascii_uppercase
         rand_letters = random.choices(letters, k=5)
         rand_letters = "".join(rand_letters)
@@ -62,6 +58,7 @@ class FFMpegDownloader:
 
     def _download(self):
         print("Downloading using requests")
+        import requests
 
         self.ffmpeg_zip_bin = requests.get(self.ffmpeg_build_url, allow_redirects=True)
         return self.ffmpeg_zip_bin
@@ -124,6 +121,7 @@ def get_long_url(request, short_url):
 def youtube(request):
     if request.method == "POST":
         from datetime import date
+        from datetime import datetime
 
         FFMpegDownloader()._check_if_file_exists()
         obj_now = datetime.now()
