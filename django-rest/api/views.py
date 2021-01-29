@@ -1,5 +1,7 @@
-from .models import Url, YoutubeDownloader
-from .serializers import UrlSerializer, YoutubeDownloadSerializer
+from rest_framework import serializers
+from rest_framework import response
+from .models import Bitrate, Url, YoutubeDownloader
+from .serializers import BitrateSerializer, UrlSerializer, YoutubeDownloadSerializer
 from django.shortcuts import redirect
 from django.http import HttpResponse
 import youtube_dl
@@ -94,6 +96,41 @@ class FFMpegDownloader:
             self._download()
             self._write_to_file()
             self._extract_files()
+
+
+class _Bitrate:
+    def __init__(self):
+        self.minute = 0
+        self.hour = 0
+        self.size = 0
+        self.episodes = 0
+        self.seconds = 0
+        self.bitrate = 0
+
+    def hour_to_seconds(self):
+        self.seconds += self.hour * 3600
+        return self.seconds
+
+    def minute_to_seconds(self):
+        self.seconds += self.minute * 60
+        return self.seconds
+
+    def calculate(self):
+        filesize = (float(self.size) / int(self.episodes)) * (1024 * 1024) * 8
+        time = self.seconds
+        self.bitrate = filesize / time
+        return self.bitrate
+
+    def input(self, minute, hour, size, episodes, seconds):
+        self.minute = int(minute)
+        self.hour = int(hour)
+        self.size = float(size)
+        self.episodes = int(episodes)
+        self.seconds = int(seconds)
+        self.hour_to_seconds()
+        self.minute_to_seconds()
+        self.calculate()
+        return self.bitrate
 
 
 @api_view(["GET", "POST"])
@@ -208,3 +245,28 @@ def youtube_get_file(request, short_url):
         )
         return response
 
+
+@api_view(["GET", "POST"])
+def bitrate(request):
+    if request.method == "POST":
+        import datetime
+
+        print(request.data)
+        datetime_object = datetime.datetime.now()
+        minute = request.data["minute"]
+        hour = request.data["hour"]
+        seconds = request.data["seconds"]
+        size = request.data["size"]
+        episodes = request.data["episode"]
+        __bitrate = _Bitrate().input(minute, hour, size, episodes, seconds)
+        request.data["bitrate"] = __bitrate
+        request.data["time"] = datetime_object
+        serializer = BitrateSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(data={"bitrate": __bitrate})
+        return Response(serializer.errors)
+    else:
+        data = Bitrate.objects.all()
+        serializer = BitrateSerializer(data, many=True)
+        return Response(serializer.data)

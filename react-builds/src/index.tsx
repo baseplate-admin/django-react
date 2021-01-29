@@ -4,6 +4,7 @@ import UrlShortener from './react-projects/UrlShortener/UrlShortener';
 import YoutubeDownloader from './react-projects/YoutubeDownloader/YoutubeDownloader'
 import './bulma.css'
 import {Route, BrowserRouter as Router, Switch} from 'react-router-dom';
+import Bitrate from './react-projects/Bitrate/bitrate';
 
 ReactDOM.render(
     <React.StrictMode>
@@ -11,6 +12,7 @@ ReactDOM.render(
             <Switch>
                 <Route path='/front/url/' component={UrlShortener} />
                 <Route path='/front/ydl/' component={YoutubeDownloader} />
+                <Route path="/front/bitrate/" component={Bitrate} />
             </Switch>
         </Router>
     </React.StrictMode>,

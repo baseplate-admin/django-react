@@ -22,4 +22,17 @@ class YoutubeDownloader(models.Model):
     short_url = models.CharField(max_length=10)
 
     def __str__(self):
-        return self.short_url
+        return self.id
+
+
+class Bitrate(models.Model):
+    hour = models.IntegerField()
+    minute = models.IntegerField()
+    second = models.IntegerField()
+    size = models.DecimalField(decimal_places=2, max_digits=6)
+    episode = models.IntegerField(default="-")
+    time = models.CharField(max_length=200, unique=True, default="-")
+    bitrate = models.IntegerField(default="--")
+
+    def __str__(self):
+        return self.id
