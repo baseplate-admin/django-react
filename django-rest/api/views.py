@@ -187,7 +187,6 @@ def youtube(request):
             }
         except:
             print("FFMpeg not installed. Downloading it now.")
-            FFMpegDownloader()._check_if_file_exists()
             ydl_options = {
                 "format": "bestaudio/best",
                 "outtmpl": media_dir,
@@ -202,21 +201,16 @@ def youtube(request):
         with youtube_dl.YoutubeDL(ydl_options) as ydl:
             info_dict = ydl.extract_info(url, download=False)  # URL = FORM
             ydl.prepare_filename(info_dict)
-            title_unchanged = info_dict["title"]
             title = info_dict["title"]
-            unsupported_characters = ["<", ">", ":", '"', "/", "\\", "|", "*"]
-            for characters in unsupported_characters:
-                if characters in title:
-                    title = title.replace(characters, "_")
-                # if "." in title:
-                #     title = title.replace(".", "")
+            media_dir = os.path.abspath(os.path.realpath(f"media/{time}/"))
             ydl.download([url])
-
-        current_dir = os.getcwd()
-        media_file_location = f"{current_dir}/media/{time}/{title}.mp3"
+        media_file_location = None
+        media_dir_files = os.listdir(media_dir)
+        for file in media_dir_files:
+            media_file_location = f"{media_dir}//{file}"
         short_url = ShortUrl()._youtube_short_link()
         request.data["time"] = time
-        request.data["title"] = title_unchanged
+        request.data["title"] = title
         request.data["url"] = url
         request.data["short_url"] = short_url
         request.data["file_location"] = media_file_location
