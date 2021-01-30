@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import Navbar from '../shared-components/navbar/Navbar';
-import BitrateHeroLarge from './hero-large/HeroLarge';
-import BitrateHeroMedium from './hero-medium/HeroMedium';
-import BitrateHero from './hero/Hero';
-import BitRateShowHome from './showHome';
+import BitrateHeroLarge from './BitrateHeroLarge/BitrateHeroLarge';
+import BitrateHeroMedium from './BitrateHeroMedium/BitrateHeroMedium';
+import BitrateHero from './BitrateHero/BitrateHero';
+import BitRateShowHome from './showHome/showHome';
 
 export default function Bitrate(){
     let [minute,setMinute] = useState(0);

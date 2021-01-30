@@ -26,7 +26,6 @@ export default function YoutubeShowDownload(props:any){
     Axios.get(url, {
       responseType: 'blob',
     }).then(res => {
-        console.log(filename)
       fileDownload(res.data, filename);
     });
   }

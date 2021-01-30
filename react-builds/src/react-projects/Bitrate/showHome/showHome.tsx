@@ -1,5 +1,5 @@
-import BitrateShowBitrateHeroMedium from "./hero-medium/HeroMedium";
-import BitrateShowBitrateHero from "./hero/Hero";
+import BitrateShowBitrateHeroMedium from "./showHomeHeroMedium/ShowHomeHeroMedium";
+import BitrateShowBitrateHero from "./showHomeHero/ShowHomeHero";
 
 export default function BitRateShowHome(props:any){
     return(

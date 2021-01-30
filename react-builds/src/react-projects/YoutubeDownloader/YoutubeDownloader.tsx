@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import Navbar from '../shared-components/navbar/Navbar'
-import YoutubeDownloadHero from './hero/Hero'
-import YoutubeDownloadHeroMedium from './hero-medium/Hero-Medium'
+import YoutubeDownloadHero from './YoutubeHero/Hero'
+import YoutubeDownloadHeroMedium from './YoutubeHeroMedium/Hero-Medium'
 import LoadinLogo from './loadingLogo/LoadinLogo';
-import YoutubeShowDownload from './show-download-folder/ShowDownload'
+import YoutubeShowDownload from './YoutubeShowDownloadFolder/YoutubeShowDownload'
 import Helmet from 'react-helmet'
 
 export default function YoutubeDownloader(){
