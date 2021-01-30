@@ -1,4 +1,4 @@
-export default function HeroMedium(){
+export default function ShowUrlHeroMedium(){
     return(
         <section className="hero">
         <div className="hero-body" style={{textAlign: "center"}}>

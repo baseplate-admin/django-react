@@ -6,6 +6,9 @@ import './bulma.css'
 import {Route, BrowserRouter as Router, Switch} from 'react-router-dom';
 import Bitrate from './react-projects/Bitrate/bitrate';
 
+// Redux Logic
+
+
 ReactDOM.render(
     <React.StrictMode>
         <Router>

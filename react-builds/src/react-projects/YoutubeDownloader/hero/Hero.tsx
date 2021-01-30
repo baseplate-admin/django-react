@@ -1,5 +1,5 @@
 import youtubeLogo from './youtube.svg'
-export default function Hero(){
+export default function YoutubeDownloadHero(){
     return(
         <section style={{paddingBottom:45}} className="hero">
         <div className="hero-body" style={{textAlign: "center"}}>

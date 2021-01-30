@@ -1,4 +1,4 @@
-export default function ShortUrl(props:any){
+export default function ShowShortUrl(props:any){
     let url = `http://127.0.0.1:8000/url/${props.props.short}/`
     return(
         <section className="hero is-medium" style={{

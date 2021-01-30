@@ -1,4 +1,4 @@
-export default function Hero(){
+export default function BitrateHero(){
     return(
         <section className="hero">
             <div className="hero-body">

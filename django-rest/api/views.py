@@ -122,11 +122,11 @@ class _Bitrate:
         return self.bitrate
 
     def input(self, minute, hour, size, episodes, seconds):
-        self.minute = int(minute)
-        self.hour = int(hour)
+        self.minute = float(minute)
+        self.hour = float(hour)
         self.size = float(size)
-        self.episodes = int(episodes)
-        self.seconds = int(seconds)
+        self.episodes = float(episodes)
+        self.seconds = float(seconds)
         self.hour_to_seconds()
         self.minute_to_seconds()
         self.calculate()
@@ -251,20 +251,25 @@ def bitrate(request):
     if request.method == "POST":
         import datetime
 
-        print(request.data)
-        datetime_object = datetime.datetime.now()
+        datetime_object = str(datetime.datetime.now())
+        print(datetime_object)
         minute = request.data["minute"]
         hour = request.data["hour"]
         seconds = request.data["seconds"]
         size = request.data["size"]
         episodes = request.data["episode"]
+        # minute = float(minute)
+        # hour = float(hour)
+        # seconds = float(seconds)
+        # episodes = float(episodes)
+
         __bitrate = _Bitrate().input(minute, hour, size, episodes, seconds)
         request.data["bitrate"] = __bitrate
         request.data["time"] = datetime_object
         serializer = BitrateSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(data={"bitrate": __bitrate})
+            return Response(data={"bitrate": float(__bitrate)})
         return Response(serializer.errors)
     else:
         data = Bitrate.objects.all()

@@ -1,4 +1,4 @@
-export default function HeroMedium(){
+export default function BitrateHeroMedium(){
     return(
         <section className="hero is-medium">
         <div className="hero-body">

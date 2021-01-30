@@ -1,5 +1,5 @@
 import Navbar from '../shared-components/navbar/Navbar';
-import HeroMedium from "./hero-medium/Hero-Medium"
+import UrlShortenerHeroMedium from "./hero-medium/Hero-Medium"
 import { useState } from 'react';
 import ShowUrl from './showUrl/showUrl';
 import Helmet from 'react-helmet'
@@ -16,7 +16,7 @@ export default function UrlShortener() {
     </Helmet>
     <Navbar />
     {!urlSentIsTrue?(
-        <HeroMedium setShort={setShort} setUrlSentIsTrue={setUrlSentIsTrue} long={long} urlNotValid={urlNotValid} setLong={setLong} setUrlNotValid = {setUrlNotValid} setTime = {setTime} time={time} />
+        <UrlShortenerHeroMedium setShort={setShort} setUrlSentIsTrue={setUrlSentIsTrue} long={long} urlNotValid={urlNotValid} setLong={setLong} setUrlNotValid = {setUrlNotValid} setTime = {setTime} time={time} />
     ) :(
         <ShowUrl short={short} />
     )

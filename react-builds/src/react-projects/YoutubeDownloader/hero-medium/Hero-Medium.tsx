@@ -3,7 +3,7 @@ import Validator from 'validator';
 import DropDown from '../dropdown/DropDown'
 import {useState} from 'react' 
 import urlsvg from './url.svg'
-export default function HeroMedium(props:any){
+export default function YoutubeDownloadYoutubeDownloadHeroMedium(props:any){
         let [toggle, setToggle] = useState(false);
         let [toggleValue, setToggleValue] = useState('');
 

@@ -3,7 +3,7 @@ import fileDownload from 'js-file-download'
 import downloadlogo from './download.svg'
 import Axios from "axios";
 
-export default function ShowDownload(props:any){
+export default function YoutubeShowDownload(props:any){
     let [timer,setTimer] = useState(0)
     let timerEle = 5
     useEffect(()=>{

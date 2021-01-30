@@ -5,7 +5,7 @@ import size from './size.svg'
 import counter from './counter.svg'
 import axios from 'axios';
 
-export default function HeroLarge(props:any){
+export default function BitrateHeroLarge(props:any){
 
     const postData = () =>{
 
@@ -14,7 +14,8 @@ export default function HeroLarge(props:any){
         axios.post(url,payload)
             .then(res=>{
                 props.setBitrate(res.data.bitrate)
-                console.log(res)
+                console.log(res.data.bitrate)
+                props.setShowHome(true);
             })
             .catch(error=>{
                 console.log(error)

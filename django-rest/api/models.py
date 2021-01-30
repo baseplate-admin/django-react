@@ -26,13 +26,13 @@ class YoutubeDownloader(models.Model):
 
 
 class Bitrate(models.Model):
-    hour = models.IntegerField()
-    minute = models.IntegerField()
-    second = models.IntegerField()
-    size = models.DecimalField(decimal_places=2, max_digits=6)
-    episode = models.IntegerField(default="-")
+    hour = models.CharField(max_length=100)
+    minute = models.CharField(max_length=100)
+    seconds = models.CharField(max_length=100)
+    size = models.CharField(max_length=6)
+    episode = models.CharField(max_length=100)
     time = models.CharField(max_length=200, unique=True, default="-")
-    bitrate = models.IntegerField(default="--")
+    bitrate = models.CharField(max_length=100)
 
     def __str__(self):
         return self.id

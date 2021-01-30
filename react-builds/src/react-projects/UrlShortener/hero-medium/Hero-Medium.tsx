@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import validator from 'validator';
-import Hero from "../hero/Hero";
+import UrlShortenerHero from "../hero/Hero";
 import link from './link.svg'
 import axios from 'axios';
-export default function HeroMedium(props:any) {
+export default function UrlShortenerHeroMedium(props:any) {
 
     function dateTime() {
         let date = new Date();
@@ -66,7 +66,7 @@ export default function HeroMedium(props:any) {
     }
     return (
         <>
-            <Hero />
+            <UrlShortenerHero />
             <section className="hero is-medium">
                 <div className="hero-body" style={{ textAlign: 'center' }}>
                     <div className="container">
