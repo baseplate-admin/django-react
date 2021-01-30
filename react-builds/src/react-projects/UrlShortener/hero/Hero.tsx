@@ -1,12 +1,11 @@
-import UrlLogo from './url.svg'
+import UrlLogo from './url'
 function Hero(){
     return(
         <section style={{paddingBottom:45}} className="hero">
         <div className="hero-body" style={{textAlign:'center'}}>
             <div className="container">
                 <div className="container">
-                        <img src={UrlLogo}
-                            width="55px" height="55px" alt="www"/>
+                        <UrlLogo/>
                 </div>
                 <h1 className="title">
                     Ushort

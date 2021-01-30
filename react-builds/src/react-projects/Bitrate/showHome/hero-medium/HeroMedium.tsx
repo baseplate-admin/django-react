@@ -1,4 +1,4 @@
-import starsandrotation from './stars and rotation.svg'
+import StarsAndRotation from './stars and rotation'
 import './rotating.css';
 export default function BitrateShowBitrateHeroMedium(props:any){
     let timing = 2
@@ -13,12 +13,7 @@ export default function BitrateShowBitrateHeroMedium(props:any){
                 OAnimation: `rotating ${timing}s linear infinite`,
                 animation: `rotating ${timing}s linear infinite`,
                 }}>
-                    <img
-                        src={starsandrotation}
-                        alt='starts and rotation'
-                        height="250px"
-                        width="250px"
-                    />
+                    <StarsAndRotation />
                 </div>
                 <br />
                 <br />

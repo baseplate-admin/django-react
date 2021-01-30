@@ -1,19 +1,23 @@
-import loadinglogo from './Pulse-1s-200px.gif';
+import './logo.css'
+
 export default function LoadingLogo(){
     return(
         <>
-        <section className="hero is-medium">
-        <div className="hero-body">
-            <div className="container">
-            <h1 className="title">
-            </h1>
-            <h2 className="subtitle">
-            </h2>
+        <div className="middle">
+            <div className="canvas canvas2">
+                <div className="spinner2"></div>
+                <div className="hourHand"></div>
+                <div className="dot"></div>
             </div>
-        </div>
-        </section>
-        <div style={{textAlign:'center', margin:'auto', }}>
-            <img src={loadinglogo} alt="Logo from loading.io"></img>
+            <div className="loader--div">
+                <div className="loader--dot"></div>
+                <div className="loader--dot"></div>
+                <div className="loader--dot"></div>
+                <div className="loader--dot"></div>
+                <div className="loader--dot"></div>
+                <div className="loader--dot"></div>
+                <div className="loader--text"></div>
+            </div>
         </div>
         </>
     )

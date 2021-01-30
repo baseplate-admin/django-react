@@ -2,7 +2,7 @@ import axios from 'axios';
 import Validator from 'validator';
 import DropDown from '../dropdown/DropDown'
 import {useState} from 'react' 
-import urlsvg from './url.svg'
+import UrlIcon from './url';
 export default function YoutubeDownloadYoutubeDownloadHeroMedium(props:any){
         let [toggle, setToggle] = useState(false);
         let [toggleValue, setToggleValue] = useState('');
@@ -54,12 +54,7 @@ export default function YoutubeDownloadYoutubeDownloadHeroMedium(props:any){
                             style={{textAlign: "center"}}
                         >
                             <span className="icon is-small is-right">
-                                <img
-                                    src={urlsvg}
-                                    width="20px"
-                                    height="30px"
-                                    alt="Url"
-                                />
+                                <UrlIcon />
                             </span>
                             <input
                                 onChange={e=>handleChange(e.target.value)}

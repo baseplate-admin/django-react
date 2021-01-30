@@ -1,8 +1,8 @@
-import hour from './hour.svg';
-import minute from './minute.svg';
-import seconds from './seconds.svg'
-import size from './size.svg'
-import counter from './counter.svg'
+import Hour from './hour';
+import Minute from './minute';
+import Seconds from './seconds'
+import Size from './size'
+import Counter from './counter'
 import axios from 'axios';
 
 export default function BitrateHeroLarge(props:any){
@@ -30,12 +30,7 @@ export default function BitrateHeroLarge(props:any){
                     style={{textAlign: "center"}}
                 >
                     <span className="icon is-small is-right">
-                        <img
-                            src={hour}
-                            width="20px"
-                            height="30px"
-                            alt="hour"
-                        />
+                        <Hour></Hour>
                     </span>
                     <input
                         required
@@ -54,12 +49,7 @@ export default function BitrateHeroLarge(props:any){
                     style={{textAlign: "center"}}
                 >
                     <span className="icon is-small is-right">
-                        <img
-                            src={minute}
-                            alt="minute"
-                            width="20px"
-                            height="30px"
-                        />
+                        <Minute />
                     </span>
                     <input
                         required
@@ -78,12 +68,7 @@ export default function BitrateHeroLarge(props:any){
                     style={{textAlign: "center"}}
                 >
                     <span className="icon is-small is-right">
-                        <img
-                            src={seconds}
-                            alt='seconds'
-                            width="20px"
-                            height="30px"
-                        />
+                        <Seconds />
                     </span>
                     <input
                         required
@@ -102,12 +87,7 @@ export default function BitrateHeroLarge(props:any){
                     style={{textAlign: "center"}}
                 >
                     <span className="icon is-small">
-                        <img
-                            src={size}
-                            alt="size"
-                            width="20px"
-                            height="30px"
-                        />
+                        <Size />
                     </span>
 
                     <input
@@ -128,12 +108,7 @@ export default function BitrateHeroLarge(props:any){
                     style={{textAlign: "center"}}
                 >
                     <span className="icon is-small is-right">
-                        <img
-                            src={counter}
-                            alt='counter'
-                            width="20px"
-                            height="30px"
-                        />
+                        <Counter />
                     </span>
 
                     <input

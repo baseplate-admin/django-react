@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import fileDownload from 'js-file-download'
-import downloadlogo from './download.svg'
+import Downloadlogo from './download'
 import Axios from "axios";
 
 export default function YoutubeShowDownload(props:any){
@@ -41,12 +41,7 @@ export default function YoutubeShowDownload(props:any){
         </div>
     </section>
     <div className="container" style={{textAlign:"center"}}>
-        <img
-            src={downloadlogo}
-            width="75px"
-            height="75px"
-            alt="Download Logo"
-        />
+        <Downloadlogo />
     </div>
     <section className="hero is-medium">
         <div className="hero-body" style={{textAlign:"center"}}>

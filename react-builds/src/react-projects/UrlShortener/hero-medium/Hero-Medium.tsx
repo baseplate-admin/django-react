@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import validator from 'validator';
 import UrlShortenerHero from "../hero/Hero";
-import link from './link.svg'
+import Link from './link'
 import axios from 'axios';
 export default function UrlShortenerHeroMedium(props:any) {
 
@@ -75,8 +75,7 @@ export default function UrlShortenerHeroMedium(props:any) {
                 </h1>
                         <div className="control has-icons-left" style={{ textAlign: 'center' }}>
                             <span className="icon is-small is-right">
-                                <img src={link}
-                                    alt="Url (WWW)" width="20px" height="30px" />
+                                <Link></Link>
                             </span>
                             <input id='long-url' onChange={handleChange} required value={props.long} className="input is-info" type="text" placeholder="Long Version Url"
                                 style={{

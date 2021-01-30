@@ -17,16 +17,19 @@ export default function YoutubeDownloader(){
     return(
         <>
         <Helmet><title>Youtube Downloader</title></Helmet>
-        <Navbar />
         {(!didYoutubeLinkPost && !showDownloadScreen)?(
             <>
+            <Navbar />
             <YoutubeDownloadHero />
             <YoutubeDownloadHeroMedium setUneditedTitleValue={setUneditedTitleValue} isUrlValidText={isUrlValidText} setisUrlValidText={setisUrlValidText} setShowDownloadScreen={setShowDownloadScreen} youtubeLink={youtubeLink} setYoutubeLink={setYoutubeLink} setDidYoutubeLinkPost={setDidYoutubeLinkPost} returnYoutubeLink={returnYoutubeLink} setReturnYoutubeLink={setReturnYoutubeLink} />
             </>
         ):(didYoutubeLinkPost && !showDownloadScreen)?(
             <LoadinLogo />
         ):(
+            <>
+            <Navbar />
             <YoutubeShowDownload uneditedTitle={uneditedTitle} returnYoutubeLink={returnYoutubeLink}/>
+            </>
 )}
         </>
     )
