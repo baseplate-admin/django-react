@@ -10,7 +10,6 @@ import PollVote from './react-projects/Polls/PollVote';
 
 // Redux Logic
 
-
 ReactDOM.render(
     <React.StrictMode>
         <Router>
@@ -22,6 +21,7 @@ ReactDOM.render(
                 <Route path='/front/poll/create/' component={CreatePolls} />
             </Switch>
         </Router>
+
     </React.StrictMode>,
     document.getElementById('root')
   );
