@@ -10,7 +10,7 @@ export default function BitrateHeroLarge(props:any){
     const postData = () =>{
 
         let payload={hour:props.hour, minute:props.minute ,seconds:props.seconds,size:props.size,episode:props.counter}
-        let url = 'http://127.0.0.1:8000/api/v1/bitrate/'
+        let url = `${props.url}/api/v1/bitrate/`
         axios.post(url,payload)
             .then(res=>{
                 props.setBitrate(res.data.bitrate)

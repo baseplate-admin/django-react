@@ -12,7 +12,7 @@ export default function YoutubeDownloadYoutubeDownloadHeroMedium(props:any){
             url:props.youtubeLink,
             bitrate:toggleValue
         }
-        let url = "http://127.0.0.1:8000/api/v1/youtube/"
+        let url = `${props.url}/api/v1/youtube/`
         axios.post(url,payload)
         .then(res=>{
             props.setUneditedTitleValue(res.data.title);

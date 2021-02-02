@@ -1,14 +1,18 @@
-from rest_framework import serializers
-from rest_framework import response
-from .models import Bitrate, Url, YoutubeDownloader
-from .serializers import BitrateSerializer, UrlSerializer, YoutubeDownloadSerializer
+from .models import Bitrate, Poll, Url, YoutubeDownloader
+from .serializers import (
+    BitrateSerializer,
+    PollSerializer,
+    UrlSerializer,
+    YoutubeDownloadSerializer,
+)
 from django.shortcuts import redirect
 from django.http import HttpResponse
-import youtube_dl
+from django.db.models import F
 
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
+import youtube_dl
 import time
 import os
 
@@ -133,6 +137,23 @@ class _Bitrate:
         return self.bitrate
 
 
+def get_ip(request):
+    x_forwarded_for = request.META.get("HTTP_X_FORWARDED_FOR")
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(",")[0]
+    else:
+        ip = request.META.get("REMOTE_ADDR")
+    import socket
+
+    try:
+        socket.inet_aton(ip)
+        ip_valid = True
+    except socket.error:
+        ip_valid = False
+    if bool(ip_valid):
+        return ip
+
+
 @api_view(["GET", "POST"])
 def url(request):
     if request.method == "POST":
@@ -246,17 +267,12 @@ def bitrate(request):
         import datetime
 
         datetime_object = str(datetime.datetime.now())
-        print(datetime_object)
+
         minute = request.data["minute"]
         hour = request.data["hour"]
         seconds = request.data["seconds"]
         size = request.data["size"]
         episodes = request.data["episode"]
-        # minute = float(minute)
-        # hour = float(hour)
-        # seconds = float(seconds)
-        # episodes = float(episodes)
-
         __bitrate = _Bitrate().input(minute, hour, size, episodes, seconds)
         request.data["bitrate"] = __bitrate
         request.data["time"] = datetime_object
@@ -268,4 +284,64 @@ def bitrate(request):
     else:
         data = Bitrate.objects.all()
         serializer = BitrateSerializer(data, many=True)
+        return Response(serializer.data)
+
+
+@api_view(["GET", "POST"])
+def polls_vote(request, pk):
+    if request.method == "POST":
+        poll = Poll.objects.get(id=pk)
+        question = request.data["option"]
+
+        if question == "option_one":
+
+            poll.option_1_count = F("option_1_count") + 1
+            poll.save()
+
+        elif question == "option_two":
+
+            poll.option_2_count = F("option_2_count") + 1
+            poll.save()
+
+        elif question == "option_three":
+
+            poll.option_3_count = F("option_3_count") + 1
+            poll.save()
+
+        elif question == "option_four":
+
+            poll.option_4_count = F("option_4_count") + 1
+            poll.save()
+
+        poll_all = Poll.objects.filter(id=pk)
+
+        serializer = PollSerializer(poll_all, many=True)
+        return Response(serializer.data)
+    else:
+        poll = Poll.objects.get(id=pk)
+        serializer = PollSerializer(poll)
+        return Response(serializer.data)
+
+
+@api_view(["GET", "POST"])
+def polls(request):
+    if request.method == "POST":
+        import datetime
+
+        datetime_object = str(datetime.datetime.now())
+
+        request.data["option_1_count"] = 0
+        request.data["option_2_count"] = 0
+        request.data["option_3_count"] = 0
+        request.data["option_4_count"] = 0
+        request.data["time"] = datetime_object
+
+        serializer = PollSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors)
+    else:
+        poll = Poll.objects.all()
+        serializer = PollSerializer(poll, many=True)
         return Response(serializer.data)

@@ -6,7 +6,7 @@ import BitrateHeroMedium from './BitrateHeroMedium/BitrateHeroMedium';
 import BitrateHero from './BitrateHero/BitrateHero';
 import BitRateShowHome from './showHome/showHome';
 
-export default function Bitrate(){
+export default function Bitrate(props:any){
     let [minute,setMinute] = useState(0);
     let [seconds,setSeconds] = useState(0);
     let [hour,setHour] = useState(0);
@@ -24,7 +24,7 @@ export default function Bitrate(){
         {!showHome?(
             <>
             <BitrateHero />
-            <BitrateHeroLarge setShowHome={setShowHome} setBitrate={setBitrate} minute={minute} setMinute={setMinute} seconds={seconds} setSeconds={setSeconds} hour={hour} setHour={setHour} size={size} setSize={setSize} counter={counter} setCounter={setCounter} />
+            <BitrateHeroLarge url={props.url} setShowHome={setShowHome} setBitrate={setBitrate} minute={minute} setMinute={setMinute} seconds={seconds} setSeconds={setSeconds} hour={hour} setHour={setHour} size={size} setSize={setSize} counter={counter} setCounter={setCounter} />
             <BitrateHeroMedium />
             </>
         ):(

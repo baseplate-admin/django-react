@@ -5,8 +5,8 @@ import Axios from "axios";
 
 export default function YoutubeShowDownload(props:any){
     let [timer,setTimer] = useState(0)
-    let timerEle = 5
     useEffect(()=>{
+        let timerEle = 5
         setTimer(timerEle)
         let interval = setInterval(()=>{
             setTimer(timerEle-1);
@@ -17,7 +17,7 @@ export default function YoutubeShowDownload(props:any){
             }
         },1000)
     },[])
-    let link = `http://127.0.0.1:8000/youtube/${props.returnYoutubeLink}/`
+    let link = `${props.url}/youtube/${props.returnYoutubeLink}/`
     const handleClick = () =>{
         download(link,props.uneditedTitle)
     }
@@ -35,7 +35,6 @@ export default function YoutubeShowDownload(props:any){
         <div className="hero-body">
             <div className="container">
                 <h1 className="title">Your Download is ready!!</h1>
-                <h2 className="subtitle"></h2>
             </div>
         </div>
     </section>
@@ -45,11 +44,10 @@ export default function YoutubeShowDownload(props:any){
     <section className="hero is-medium">
         <div className="hero-body" style={{textAlign:"center"}}>
             <div className="container">
-                <h1 className="title"></h1>
                 <h2 className="subtitle">
                     If your download doesn't start in {timer},
                     <br />
-                    <a id="submit" onClick={handleClick}
+                    <a onClick={handleClick}
                         >Click me</a
                     >
                 </h2>

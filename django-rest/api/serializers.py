@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Bitrate, Url, YoutubeDownloader
+from .models import Bitrate, Poll, Url, YoutubeDownloader
 
 # Define your Serializer here.
 
@@ -21,3 +21,8 @@ class BitrateSerializer(serializers.ModelSerializer):
         model = Bitrate
         fields = "__all__"
 
+
+class PollSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Poll
+        fields = "__all__"

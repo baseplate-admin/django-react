@@ -38,7 +38,7 @@ export default function UrlShortenerHeroMedium(props:any) {
     }
     function postData() {
         const longUrl = { long: props.long, time: props.time };
-        const url = 'http://127.0.0.1:8000/api/v1/url/'
+        const url = `${props.url}/api/v1/url/`
         axios.post(url, longUrl)
             .then(res => {
                 props.setShort(res.data.short)

@@ -1,5 +1,5 @@
 export default function ShowShortUrl(props:any){
-    let url = `http://127.0.0.1:8000/url/${props.props.short}/`
+    let url = `${props.props.url}/url/${props.props.short}/`
     return(
         <section className="hero is-medium" style={{
             paddingTop: 10,

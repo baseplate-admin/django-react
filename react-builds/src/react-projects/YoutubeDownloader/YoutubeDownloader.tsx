@@ -6,7 +6,7 @@ import LoadinLogo from './loadingLogo/LoadinLogo';
 import YoutubeShowDownload from './YoutubeShowDownloadFolder/YoutubeShowDownload'
 import Helmet from 'react-helmet'
 
-export default function YoutubeDownloader(){
+export default function YoutubeDownloader(props:any){
     let [youtubeLink, setYoutubeLink] = useState('');
     let [didYoutubeLinkPost, setDidYoutubeLinkPost] = useState(false);
     let [returnYoutubeLink, setReturnYoutubeLink] = useState(''); 
@@ -21,14 +21,14 @@ export default function YoutubeDownloader(){
             <>
             <Navbar />
             <YoutubeDownloadHero />
-            <YoutubeDownloadHeroMedium setUneditedTitleValue={setUneditedTitleValue} isUrlValidText={isUrlValidText} setisUrlValidText={setisUrlValidText} setShowDownloadScreen={setShowDownloadScreen} youtubeLink={youtubeLink} setYoutubeLink={setYoutubeLink} setDidYoutubeLinkPost={setDidYoutubeLinkPost} returnYoutubeLink={returnYoutubeLink} setReturnYoutubeLink={setReturnYoutubeLink} />
+            <YoutubeDownloadHeroMedium url={props.url} setUneditedTitleValue={setUneditedTitleValue} isUrlValidText={isUrlValidText} setisUrlValidText={setisUrlValidText} setShowDownloadScreen={setShowDownloadScreen} youtubeLink={youtubeLink} setYoutubeLink={setYoutubeLink} setDidYoutubeLinkPost={setDidYoutubeLinkPost} returnYoutubeLink={returnYoutubeLink} setReturnYoutubeLink={setReturnYoutubeLink} />
             </>
         ):(didYoutubeLinkPost && !showDownloadScreen)?(
             <LoadinLogo />
         ):(
             <>
             <Navbar />
-            <YoutubeShowDownload uneditedTitle={uneditedTitle} returnYoutubeLink={returnYoutubeLink}/>
+            <YoutubeShowDownload url={props.url} uneditedTitle={uneditedTitle} returnYoutubeLink={returnYoutubeLink}/>
             </>
 )}
         </>

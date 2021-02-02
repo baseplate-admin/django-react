@@ -1,21 +1,30 @@
-import { Helmet } from "react-helmet";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import Navbar from "../shared-components/navbar/Navbar";
 import PollVoteHeroFirst from "./PollVoteHeroFirst/PollVoteHeroFirst";
 import PollVoteHeroMedium from "./PollVoteHeroMedium/PollVoteHeroMedium";
 import PollVoteHeroSecond from "./PollVoteHeroSecond/PollVoteHeroSecond";
+import PollVoteThankYou from "./PollVoteThankYou/PollVoteThankYou";
 
-export default function PollVote(){
-    let slugParam = useParams(); //Returns id
+export default function PollVote(props:any){
+    let slugParam = useParams();  //Returns id
+    let [isVoted,setIsVoted] = useState(false);
     return(
         <>
-        <Helmet>
-            <title>Poll Vote</title>
-        </Helmet>
+        {!isVoted?(
+            <>
         <Navbar />
         <PollVoteHeroFirst />
         <PollVoteHeroSecond />
-        <PollVoteHeroMedium />
+        <PollVoteHeroMedium setIsVoted={setIsVoted} url={props.url} slug={slugParam}/>
+        </>
+        ):(
+            <>
+            <Navbar />
+            <PollVoteThankYou url={props.url} slug={slugParam} />
+            </>
+        )}
+
         </>
     )
 }
