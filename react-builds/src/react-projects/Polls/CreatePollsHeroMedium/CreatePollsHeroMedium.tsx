@@ -29,7 +29,8 @@ export default function CreatePollsHeroMedium(props:any){
         }
         axios.post(url,payload)
         .then(res=>{
-            console.log(res)
+            // console.log(res)
+            history.push(`/front/poll/${res.data.id}`)
             // history.push("/front/ydl/")  // This Works At least Put what url you wanna push to.
         })
         .catch(e=>{
