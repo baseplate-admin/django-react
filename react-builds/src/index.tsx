@@ -10,7 +10,7 @@ import CreatePolls from './react-projects/Polls/CreatePolls';
 import PollVote from './react-projects/Polls/PollVote';
 import PollResult from './react-projects/Polls/PollResult';
 
-let urlResolver = "http://127.0.0.1:8000"
+let urlResolver = "https://zarif-ahnaf.duckdns.org"
 
 ReactDOM.render(
     <React.StrictMode>

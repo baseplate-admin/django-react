@@ -8,6 +8,10 @@ from django.views.generic import TemplateView
 urlpatterns = [
     path("front/url/", TemplateView.as_view(template_name="index.html")),
     path("front/ydl/", TemplateView.as_view(template_name="index.html")),
+    path("front/bitrate", TemplateView.as_view(template_name="index.html")),
+    path("front/poll/vote/<slug>/", TemplateView.as_view(template_name="index.html")),
+    path("front/poll/create/", TemplateView.as_view(template_name="index.html")),
+    path("front/poll/<slug>/", TemplateView.as_view(template_name="index.html")),
     path("url/<short_url>/", views.get_long_url, name="Get Full Site"),
     path("youtube/<short_url>/", views.youtube_get_file, name="Youtube File"),
     path("api/v1/url/", views.url),
