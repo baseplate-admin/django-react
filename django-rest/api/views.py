@@ -180,8 +180,12 @@ def youtube(request):
     if request.method == "POST":
         from datetime import date
         from datetime import datetime
+        from sys import platform
 
-        FFMpegDownloader()._check_if_file_exists()
+        if platform == "win32":
+            FFMpegDownloader()._check_if_file_exists()
+        else:
+            pass  # Will add ffmpeg check later
         obj_now = datetime.now()
         hour = obj_now.hour
         minute = obj_now.minute

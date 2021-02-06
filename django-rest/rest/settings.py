@@ -27,7 +27,7 @@ SECRET_KEY = "18bj+j1tro6-x6w*_t-b03l(u)344!!oo%@n+qd&s8ie_h=jo^"
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS.append("zarif-ahnaf.duckdns.org")
 
 # Application definition
 
